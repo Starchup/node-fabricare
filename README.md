@@ -26,3 +26,10 @@ pos.Customer.GetCustomer("id");
 pos.Customer.GetCustomers({ firstName: "c" });
 pos.Customer.UpdateCustomer("id", { firstName: "d" });
 ```
+
+
+#### Tests
+
+`npm test` will run a linter and the tests in `test.js`  
+The tests will not pass unless you edit the configuration there and set it to your Fabricare Instance.  
+Feel free to use those tests as reference for your implementation.  
