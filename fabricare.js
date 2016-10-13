@@ -34,8 +34,6 @@ var FABRICARE = function(config) {
                 }
             };
 
-            console.log(options);
-
             return request(options);
         }
     };
