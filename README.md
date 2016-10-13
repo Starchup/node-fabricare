@@ -21,8 +21,8 @@ var pos = new FABRI(options);
 Call fabricare for full documentation, but here are a few basics:
 
 ```
-FABRI.Customer.CreateCustomer({ email: "a@b.com", firstName: "a", lastName: "b" });
-FABRI.Customer.GetCustomer("id");
-FABRI.Customer.GetCustomers({ firstName: "c" });
-FABRI.Customer.UpdateCustomer("id", { firstName: "d" });
+pos.Customer.CreateCustomer({ email: "a@b.com", firstName: "a", lastName: "b" });
+pos.Customer.GetCustomer("id");
+pos.Customer.GetCustomers({ firstName: "c" });
+pos.Customer.UpdateCustomer("id", { firstName: "d" });
 ```
