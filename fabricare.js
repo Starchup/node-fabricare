@@ -119,7 +119,7 @@ var FABRICARE = function(config) {
                 var queryArray = Object.keys(query).map(function(key, index) {
                     return key + "=" + query[key];
                 });
-                url = url + "?" + queryArray.join("&");;
+                url = url + "?" + queryArray.join("&");
             }
 
             return url;

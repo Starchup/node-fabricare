@@ -21,7 +21,12 @@
     "dependencies": {
         "request-promise": "1.0.2"
     },
-    "scripts": {},
+    "devDependencies": {
+        "jshint": "2.9.3"
+    },
+    "scripts": {
+        "pretest": "jshint .",
+    },
     "readmeFilename": "README.md",
     "bugs": {
         "url": "https://github.com/Starchup/node-fabricare/issues"
