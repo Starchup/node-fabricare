@@ -15,8 +15,8 @@ var FABRICARE = function(config) {
 
         CreateRequest: function(httpMethod, resource, identifier, method, body, query) {
             self.Util.validateArgument(resource, 'resource');
+            self.Util.validateArgument(httpMethod, 'httpMethod');
 
-            if (httpMethod === undefined) httpMethod = null;
             if (identifier === undefined) identifier = null;
             if (method === undefined) method = null;
             if (body === undefined) body = null;
