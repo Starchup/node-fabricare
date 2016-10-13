@@ -67,18 +67,18 @@ var FABRICARE = function(config) {
             return self.Request.CreateRequest('GET', 'customers', customerId, 'exists');
         },
 
-        GetCustomer: function(customerId) {
+        GetCustomerById: function(customerId) {
             self.Util.validateArgument(customerId, 'customerId');
 
             return self.Request.CreateRequest('GET', 'customers', customerId);
         },
 
-        GetCustomers: function(queryArguments) {
+        GetCustomerWithQuery: function(queryArguments) {
             return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments);
         },
 
         CreateCustomer: function(customer) {
-            self.Util.validateArgument(customerId, 'customerId');
+            self.Util.validateArgument(customer, 'customer');
             self.Util.validateArgument(customer.email, 'customer.email');
             self.Util.validateArgument(customer.firstName, 'customer.firstName');
             self.Util.validateArgument(customer.lastName, 'customer.lastName');
