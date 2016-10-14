@@ -61,23 +61,23 @@ var FABRICARE = function(config) {
          * taxExempt
          **/
 
-        CheckCustomer: function(customerId) {
+        Exists: function(customerId) {
             self.Util.validateArgument(customerId, 'customerId');
 
             return self.Request.CreateRequest('GET', 'customers', customerId, 'exists');
         },
 
-        GetCustomerById: function(customerId) {
+        FindById: function(customerId) {
             self.Util.validateArgument(customerId, 'customerId');
 
             return self.Request.CreateRequest('GET', 'customers', customerId);
         },
 
-        GetCustomerWithQuery: function(queryArguments) {
+        FindWithQuery: function(queryArguments) {
             return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments);
         },
 
-        CreateCustomer: function(customer) {
+        Create: function(customer) {
             self.Util.validateArgument(customer, 'customer');
             self.Util.validateArgument(customer.email, 'customer.email');
             self.Util.validateArgument(customer.firstName, 'customer.firstName');
@@ -86,7 +86,7 @@ var FABRICARE = function(config) {
             return self.Request.CreateRequest('POST', 'customers', null, null, customer);
         },
 
-        UpdateCustomer: function(customerId, customer) {
+        Update: function(customerId, customer) {
             self.Util.validateArgument(customerId, 'customerId');
             self.Util.validateArgument(customer, 'customer');
 
