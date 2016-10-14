@@ -107,3 +107,134 @@ describe('Customer Methods', function() {
         }).catch(done);
     });
 });
+
+describe('Order Methods', function() {
+
+    var now = new Date();
+    var orderDate = now;
+
+    now.setHours(now.getHours() + 24);
+    var promisedDate = now;
+
+    var testOrder = {
+        customerId: 000001,
+        hasInvoice: false,
+        ordered: orderDate,
+        promised: promisedDate,
+        invNote1: "First Note",
+        invNote2: 'Second Note',
+        invMemo: 'Memo'
+    };
+    var testQuery = { invNote1: "First Note" };
+    var testUpdate = { invNote1: "Updated Note" };
+    var testOrderId = 1;
+
+    it('should create an order', function(done) {
+        fab.Order.Create(testOrder).then(function(res) {
+            var response = JSON.parse(res);
+
+            console.log(response);
+
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object');
+            expect(response.Data.OrderID).to.be.a('number');
+
+            testOrderId = response.Data.OrderID;
+            done();
+        }).catch(done);
+    });
+
+    it('should find that the prder exists with ID', function(done) {
+        expect(testOrderId).to.be.a('number');
+
+        fab.Order.Exists(testOrderId).then(function(res) {
+            var response = JSON.parse(res);
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object', "Data does not exist");
+            expect(response.Data.OrderID).to.be.a('number', "OrderID is not a number or does not exist");
+            expect(response.Data.OrderID).to.equal(testOrderId, "OrderID does not match");
+
+            done();
+        }).catch(done);
+    });
+
+    it('should find an order with ID', function(done) {
+        expect(testOrderId).to.be.a('number');
+
+        fab.Order.FindById(testOrderId).then(function(res) {
+            var response = JSON.parse(res);
+
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object');
+            expect(response.Data.Order).to.be.an('object');
+
+            var o = response.Data.Order;
+            expect(o.OrderID).to.equal(testOrderId, "OrderID does not match");
+            expect(o.CustomerID).to.equal(testOrder.customerId, "CustomerID does not match");
+            expect(o.HasInvoice).to.equal(false, "HasInvoice does not match");
+            expect(new Date(o.Ordered)).to.be.a('date', "Ordered is not a date or does not exist");
+            expect(new Date(o.Promised)).to.be.a('date', "Promised is not a date or does not exist");
+
+            done();
+        }).catch(done);
+    });
+
+    it('should update an order', function(done) {
+        expect(testOrderId).to.be.a('number');
+        expect(testUpdate).to.be.an('object');
+
+        fab.Order.Update(testOrderId, testUpdate).then(function(res) {
+            var response = JSON.parse(res);
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object');
+            expect(response.Data.OrderID).to.be.a('number');
+            expect(response.Data.OrderID).to.equal(testOrderId);
+
+            done();
+        }).catch(done);
+    });
+
+    it('should mark an order as sold', function(done) {
+        expect(testOrderId).to.be.a('number');
+
+        fab.Order.Sold(testOrderId).then(function(res) {
+            var response = JSON.parse(res);
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object');
+            expect(response.Data.OrderID).to.be.a('number');
+            expect(response.Data.OrderID).to.equal(testOrderId);
+
+            done();
+        }).catch(done);
+    });
+
+    it('should get the order status', function(done) {
+        expect(testOrderId).to.be.a('number');
+
+        fab.Order.Status(testOrderId).then(function(res) {
+            var response = JSON.parse(res);
+
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object');
+
+            var d = response.Data;
+            expect(d.OrderID).to.equal(testOrderId, "OrderID does not match");
+            expect(d.Finished).to.equal(false, "Order should not be finished");
+            expect(d.Sold).to.equal(false, "Order should not be sold");
+
+            done();
+        }).catch(done);
+    });
+});

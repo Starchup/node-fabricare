@@ -94,6 +94,61 @@ var FABRICARE = function(config) {
         }
     };
 
+    self.Order = {
+        //Order attributes
+        /**
+         * externalId
+         * customerId
+         * Ordered
+         * Promised
+         * InvNote1
+         * InvNote2
+         * InvMemo
+         **/
+
+        Exists: function(orderId) {
+            self.Util.validateArgument(orderId, 'orderId');
+
+            return self.Request.CreateRequest('GET', 'orders', orderId, 'exists');
+        },
+
+        FindById: function(orderId) {
+            self.Util.validateArgument(orderId, 'orderId');
+
+            return self.Request.CreateRequest('GET', 'orders', orderId);
+        },
+
+        Create: function(order) {
+            self.Util.validateArgument(order, 'order');
+            self.Util.validateArgument(order.customerId, 'order.customerId');
+            self.Util.validateArgument(order.ordered, 'order.ordered');
+
+            order.ordered = order.ordered.toISOString();
+            order.promised = order.promised.toISOString();
+
+            return self.Request.CreateRequest('POST', 'orders', null, null, order);
+        },
+
+        Update: function(orderId, order) {
+            self.Util.validateArgument(orderId, 'orderId');
+            self.Util.validateArgument(order, 'order');
+
+            return self.Request.CreateRequest('POST', 'orders', orderId, null, order);
+        },
+
+        Sold: function(orderId) {
+            self.Util.validateArgument(orderId, 'orderId');
+
+            return self.Request.CreateRequest('PATCH', 'orders', orderId);
+        },
+
+        Status: function(orderId) {
+            self.Util.validateArgument(orderId, 'orderId');
+
+            return self.Request.CreateRequest('GET', 'orders', orderId, 'status');
+        }
+    };
+
     self.Util = {
         validateArgument: function(arg, name) {
             if (arg === null || arg === undefined) {
