@@ -25,6 +25,16 @@ pos.Customer.CreateCustomer({ email: "a@b.com", firstName: "a", lastName: "b" })
 pos.Customer.GetCustomer("id");
 pos.Customer.GetCustomers({ firstName: "c" });
 pos.Customer.UpdateCustomer("id", { firstName: "d" });
+
+pos.Order.Exists(order_id);
+pos.Order.FindById(order_id);
+pos.Order.Create(order_object);
+pos.Order.Update(order_id, order_object);
+pos.Order.Sold(order_id);
+pos.Order.Status(order_id);
+
+pos.Invoice.Exists(order_id);
+pos.Invoice.FindById(order_id);
 ```
 
 
