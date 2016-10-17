@@ -238,3 +238,59 @@ describe('Order Methods', function() {
         }).catch(done);
     });
 });
+
+describe('Invoice Methods', function() {
+    var testInvoiceId = 0001;
+
+    it('should find that the invoice exists with ID', function(done) {
+        expect(testInvoiceId).to.be.a('number');
+
+        fab.Invoice.Exists(testInvoiceId).then(function(res) {
+            var response = JSON.parse(res);
+
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object', "Data does not exist");
+            expect(response.Data.InvoiceID).to.be.a('number', "InvoiceID is not a number or does not exist");
+            expect(response.Data.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
+
+            done();
+        }).catch(done);
+    });
+
+    it('should find an invoice with ID', function(done) {
+        expect(testInvoiceId).to.be.a('number');
+
+        fab.Invoice.FindById(testInvoiceId).then(function(res) {
+            var response = JSON.parse(res);
+
+            expect(response.Code).to.equal(200);
+            expect(response.Status).to.equal("Success");
+
+            expect(response.Data).to.be.an('object');
+            expect(response.Data.Invoice).to.be.an('object');
+
+            var i = response.Data.Invoice;
+            expect(i.OrderID).to.be.a('number', "OrderID is not a number");
+            expect(i.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
+            expect(i.Finished).to.equal(false, "Order should not be finished");
+            expect(i.Sold).to.equal(false, "Order should not be sold");
+            expect(i.Total).to.be.a('number', "Total is not a number or does not exist");
+            expect(i.Tax).to.be.a('number', "Tax is not a number or does not exist");
+
+            expect(response.Data.Invoice).to.be.an('object');
+
+            var ds = i.Detail;
+            ds.forEach(function(d) {
+                expect(d.Typ).to.be.a('string', "Typ is not a string or does not exist");
+                expect(d.Qty).to.be.a('number', "Qty is not a number or does not exist");
+                expect(d.Pcs).to.be.a('number', "Pcs is not a number or does not exist");
+                expect(d.Amt).to.be.a('number', "Amt is not a number or does not exist");
+                expect(d.Dsc).to.be.a('string', "Dsc is not a string or does not exist");
+            });
+
+            done();
+        }).catch(done);
+    });
+});

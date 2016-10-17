@@ -149,6 +149,45 @@ var FABRICARE = function(config) {
         }
     };
 
+    self.Invoice = {
+        //Invoice attributes
+        /**
+         * orderId
+         * customerId
+         * dept
+         * rack
+         * invoiced
+         * promised
+         * finished
+         * paid
+         * delivered
+         * srvFees
+         * coupons
+         * discounts
+         * savings
+         * tax
+         * total
+         * paidAmt
+         * detail
+         * - typ
+         * - qty
+         * - dsc
+         * - amt
+         **/
+
+        Exists: function(invoiceId) {
+            self.Util.validateArgument(invoiceId, 'invoiceId');
+
+            return self.Request.CreateRequest('GET', 'invoices', invoiceId, 'exists');
+        },
+
+        FindById: function(invoiceId) {
+            self.Util.validateArgument(invoiceId, 'invoiceId');
+
+            return self.Request.CreateRequest('GET', 'invoices', invoiceId);
+        }
+    };
+
     self.Util = {
         validateArgument: function(arg, name) {
             if (arg === null || arg === undefined) {
