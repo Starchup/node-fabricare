@@ -67,6 +67,40 @@ describe('Customer Methods', function() {
         }).catch(done);
     });
 
+    it('should find in process invoices by CustomerID', function(done) {
+        expect(testCustomerId).to.be.a('number');
+
+        fab.Customer.FindByIdInvoices(testCustomerId, 'verboseinventory').then(function(res) {
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
+
+            expect(res.Data).to.be.an('array');
+
+            var invoices = res.Data;
+            invoices.forEach(function(iv) {
+                expect(iv.Invoice.OrderID).to.be.a('number', "OrderID is not a string or does not exist");
+                expect(iv.Invoice.InvoiceID).to.be.a('number', "InvoiceID is not a string or does not exist");
+                expect(iv.Invoice.SrvFees).to.be.a('number', "SrvFees is not a string or does not exist");
+                expect(iv.Invoice.Coupons).to.be.a('number', "Coupons is not a string or does not exist");
+                expect(iv.Invoice.Discounts).to.be.a('number', "Discounts is not a string or does not exist");
+                expect(iv.Invoice.Savings).to.be.a('number', "Savings is not a string or does not exist");
+                expect(iv.Invoice.Tax).to.be.a('number', "Tax is not a string or does not exist");
+                expect(iv.Invoice.Dept).to.be.a('string', "Dept is not a string or does not exist");
+                expect(iv.Invoice.Rack).to.be.a('string', "Rack is not a string or does not exist");
+
+                iv.Invoice.Detail.forEach(function(it) {
+                    expect(it.Typ).to.be.a('string', "Typ is not a string or does not exist");
+                    expect(it.Qty).to.be.a('number', "Qty is not a number or does not exist");
+                    expect(it.Pcs).to.be.a('number', "Pcs is not a number or does not exist");
+                    expect(it.Amt).to.be.a('number', "Amt is not a number or does not exist");
+                    expect(it.Dsc).to.be.a('string', "Dsc is not a string or does not exist");
+                });
+            });
+
+            done();
+        }).catch(done);
+    });
+
     it('should find a customer with query', function(done) {
         expect(testQuery).to.be.an('object');
 

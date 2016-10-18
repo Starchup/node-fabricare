@@ -81,6 +81,13 @@ var FABRICARE = function(config) {
             return self.Request.CreateRequest('GET', 'customers', customerId);
         },
 
+        FindByIdInvoices: function(customerId, status) {
+            self.Util.validateArgument(customerId, 'customerId', customerId);
+            self.Util.validateArgument(status, 'status', status);
+
+            return self.Request.CreateRequest('GET', 'customers', customerId, status);
+        },
+
         FindWithQuery: function(queryArguments) {
             return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments).catch(function(response) {
                 console.log(response);
