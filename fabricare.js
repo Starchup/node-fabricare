@@ -83,6 +83,9 @@ var FABRICARE = function(config) {
             self.Util.validateArgument(customer.firstName, 'customer.firstName');
             self.Util.validateArgument(customer.lastName, 'customer.lastName');
 
+            if (customer.street) customer.Addr1 = customer.street;
+            if (customer.unit) customer.Addr2 = customer.unit;
+
             return self.Request.CreateRequest('POST', 'customers', null, null, customer);
         },
 
