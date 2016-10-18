@@ -133,8 +133,6 @@ describe('Order Methods', function() {
         fab.Order.Create(testOrder).then(function(res) {
             var response = JSON.parse(res);
 
-            console.log(response);
-
             expect(response.Code).to.equal(200);
             expect(response.Status).to.equal("Success");
 
