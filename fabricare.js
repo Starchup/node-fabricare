@@ -34,7 +34,15 @@ var FABRICARE = function(config) {
                 }
             };
 
-            return request(options);
+            return request(options).then(function(res) {
+                var response = JSON.parse(res);
+                if (!response || !response.Data) return Promise.reject("No data");
+                if (!self.Util.hasValidCode(response)) return Promise.reject(response.message);
+                return Promise.resolve(response);
+            }).catch(function(err) {
+                delete err.response;
+                return Promise.reject(err);
+            });
         }
     };
 
@@ -74,7 +82,11 @@ var FABRICARE = function(config) {
         },
 
         FindWithQuery: function(queryArguments) {
-            return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments);
+            return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments).catch(function(response) {
+                console.log(response);
+                if (response.statusCode === 404) return Promise.resolve({});
+                return Promise.reject();
+            });
         },
 
         Create: function(customer) {
@@ -82,9 +94,6 @@ var FABRICARE = function(config) {
             self.Util.validateArgument(customer.email, 'customer.email');
             self.Util.validateArgument(customer.firstName, 'customer.firstName');
             self.Util.validateArgument(customer.lastName, 'customer.lastName');
-
-            if (customer.street) customer.Addr1 = customer.street;
-            if (customer.unit) customer.Addr2 = customer.unit;
 
             return self.Request.CreateRequest('POST', 'customers', null, null, customer);
         },
@@ -192,6 +201,12 @@ var FABRICARE = function(config) {
     };
 
     self.Util = {
+        hasValidCode: function(res) {
+            if (res.statusCode && res.statusCode === 200) return true;
+            if (res.Code && res.Code === 200) return true;
+            return false;
+        },
+
         validateArgument: function(arg, name) {
             if (arg === null || arg === undefined) {
                 throw new Error("Required argument missing: " + name);

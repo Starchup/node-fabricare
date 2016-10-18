@@ -22,14 +22,13 @@ describe('Customer Methods', function() {
 
     it('should create a customer', function(done) {
         fab.Customer.Create(testCustomer).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object', "Data does not exist");
-            expect(response.Data.CustomerID).to.be.a('number', "CustomerID is not a number or does not exist");
+            expect(res.Data).to.be.an('object', "Data does not exist");
+            expect(res.Data.CustomerID).to.be.a('number', "CustomerID is not a number or does not exist");
 
-            testCustomerId = response.Data.CustomerID
+            testCustomerId = res.Data.CustomerID
             done();
         }).catch(done);
     });
@@ -38,13 +37,12 @@ describe('Customer Methods', function() {
         expect(testCustomerId).to.be.a('number');
 
         fab.Customer.Exists(testCustomerId).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object', "Data does not exist");
-            expect(response.Data.CustomerID).to.be.a('number', "CustomerID is not a number or does not exist");
-            expect(response.Data.CustomerID).to.equal(testCustomerId, "CustomerID does not match");
+            expect(res.Data).to.be.an('object', "Data does not exist");
+            expect(res.Data.CustomerID).to.be.a('number', "CustomerID is not a number or does not exist");
+            expect(res.Data.CustomerID).to.equal(testCustomerId, "CustomerID does not match");
 
             done();
         }).catch(done);
@@ -54,14 +52,13 @@ describe('Customer Methods', function() {
         expect(testCustomerId).to.be.a('number');
 
         fab.Customer.FindById(testCustomerId).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.Customer).to.be.an('object');
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.Customer).to.be.an('object');
 
-            var c = response.Data.Customer;
+            var c = res.Data.Customer;
             expect(c.Email).to.equal(testCustomer.email, "Email does not match");
             expect(c.FirstName).to.equal(testCustomer.firstName, "FirstName does not match");
             expect(c.LastName).to.equal(testCustomer.lastName, "LastName does not match");
@@ -74,14 +71,13 @@ describe('Customer Methods', function() {
         expect(testQuery).to.be.an('object');
 
         fab.Customer.FindWithQuery(testQuery).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.Customer).to.be.an('object');
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.Customer).to.be.an('object');
 
-            var c = response.Data.Customer;
+            var c = res.Data.Customer;
             expect(c.Email).to.equal(testCustomer.email, "Email does not match");
             expect(c.FirstName).to.equal(testCustomer.firstName, "FirstName does not match");
             expect(c.LastName).to.equal(testCustomer.lastName, "LastName does not match");
@@ -95,13 +91,12 @@ describe('Customer Methods', function() {
         expect(testUpdate).to.be.an('object');
 
         fab.Customer.Update(testCustomerId, testUpdate).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object', "Data does not exist");
-            expect(response.Data.CustomerID).to.be.a('number', "CustomerID is not a number or does not exist");
-            expect(response.Data.CustomerID).to.equal(testCustomerId, "CustomerID does not match");
+            expect(res.Data).to.be.an('object', "Data does not exist");
+            expect(res.Data.CustomerID).to.be.a('number', "CustomerID is not a number or does not exist");
+            expect(res.Data.CustomerID).to.equal(testCustomerId, "CustomerID does not match");
 
             done();
         }).catch(done);
@@ -131,15 +126,13 @@ describe('Order Methods', function() {
 
     it('should create an order', function(done) {
         fab.Order.Create(testOrder).then(function(res) {
-            var response = JSON.parse(res);
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.OrderID).to.be.a('number');
 
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.OrderID).to.be.a('number');
-
-            testOrderId = response.Data.OrderID;
+            testOrderId = res.Data.OrderID;
             done();
         }).catch(done);
     });
@@ -148,13 +141,12 @@ describe('Order Methods', function() {
         expect(testOrderId).to.be.a('number');
 
         fab.Order.Exists(testOrderId).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object', "Data does not exist");
-            expect(response.Data.OrderID).to.be.a('number', "OrderID is not a number or does not exist");
-            expect(response.Data.OrderID).to.equal(testOrderId, "OrderID does not match");
+            expect(res.Data).to.be.an('object', "Data does not exist");
+            expect(res.Data.OrderID).to.be.a('number', "OrderID is not a number or does not exist");
+            expect(res.Data.OrderID).to.equal(testOrderId, "OrderID does not match");
 
             done();
         }).catch(done);
@@ -164,15 +156,13 @@ describe('Order Methods', function() {
         expect(testOrderId).to.be.a('number');
 
         fab.Order.FindById(testOrderId).then(function(res) {
-            var response = JSON.parse(res);
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.Order).to.be.an('object');
 
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.Order).to.be.an('object');
-
-            var o = response.Data.Order;
+            var o = res.Data.Order;
             expect(o.OrderID).to.equal(testOrderId, "OrderID does not match");
             expect(o.CustomerID).to.equal(testOrder.customerId, "CustomerID does not match");
             expect(o.HasInvoice).to.equal(false, "HasInvoice does not match");
@@ -188,107 +178,99 @@ describe('Order Methods', function() {
         expect(testUpdate).to.be.an('object');
 
         fab.Order.Update(testOrderId, testUpdate).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.OrderID).to.be.a('number');
-            expect(response.Data.OrderID).to.equal(testOrderId);
-
-            done();
-        }).catch(done);
-    });
-
-    it('should mark an order as sold', function(done) {
-        expect(testOrderId).to.be.a('number');
-
-        fab.Order.Sold(testOrderId).then(function(res) {
-            var response = JSON.parse(res);
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
-
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.OrderID).to.be.a('number');
-            expect(response.Data.OrderID).to.equal(testOrderId);
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.OrderID).to.be.a('number');
+            expect(res.Data.OrderID).to.equal(testOrderId);
 
             done();
         }).catch(done);
     });
 
-    it('should get the order status', function(done) {
-        expect(testOrderId).to.be.a('number');
+        it('should mark an order as sold', function(done) {
+            expect(testOrderId).to.be.a('number');
 
-        fab.Order.Status(testOrderId).then(function(res) {
-            var response = JSON.parse(res);
+            fab.Order.Sold(testOrderId).then(function(res) {
+                expect(res.Code).to.equal(200);
+                expect(res.Status).to.equal("Success");
 
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+                expect(res.Data).to.be.an('object');
+                expect(res.Data.OrderID).to.be.a('number');
+                expect(res.Data.OrderID).to.equal(testOrderId);
 
-            expect(response.Data).to.be.an('object');
+                done();
+            }).catch(done);
+        });
 
-            var d = response.Data;
-            expect(d.OrderID).to.equal(testOrderId, "OrderID does not match");
-            expect(d.Finished).to.equal(false, "Order should not be finished");
-            expect(d.Sold).to.equal(false, "Order should not be sold");
+        it('should get the order status', function(done) {
+            expect(testOrderId).to.be.a('number');
 
-            done();
-        }).catch(done);
-    });
-});
+            fab.Order.Status(testOrderId).then(function(res) {
+                expect(res.Code).to.equal(200);
+                expect(res.Status).to.equal("Success");
 
-describe('Invoice Methods', function() {
-    var testInvoiceId = 0001;
+                expect(res.Data).to.be.an('object');
 
-    it('should find that the invoice exists with ID', function(done) {
-        expect(testInvoiceId).to.be.a('number');
+                var d = res.Data;
+                expect(d.OrderID).to.equal(testOrderId, "OrderID does not match");
+                expect(d.Finished).to.equal(false, "Order should not be finished");
+                expect(d.Sold).to.equal(false, "Order should not be sold");
 
-        fab.Invoice.Exists(testInvoiceId).then(function(res) {
-            var response = JSON.parse(res);
-
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
-
-            expect(response.Data).to.be.an('object', "Data does not exist");
-            expect(response.Data.InvoiceID).to.be.a('number', "InvoiceID is not a number or does not exist");
-            expect(response.Data.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
-
-            done();
-        }).catch(done);
+                done();
+            }).catch(done);
+        });
     });
 
-    it('should find an invoice with ID', function(done) {
-        expect(testInvoiceId).to.be.a('number');
+    describe('Invoice Methods', function() {
+        var testInvoiceId = 0001;
 
-        fab.Invoice.FindById(testInvoiceId).then(function(res) {
-            var response = JSON.parse(res);
+        it('should find that the invoice exists with ID', function(done) {
+            expect(testInvoiceId).to.be.a('number');
 
-            expect(response.Code).to.equal(200);
-            expect(response.Status).to.equal("Success");
+            fab.Invoice.Exists(testInvoiceId).then(function(res) {
+                expect(res.Code).to.equal(200);
+                expect(res.Status).to.equal("Success");
 
-            expect(response.Data).to.be.an('object');
-            expect(response.Data.Invoice).to.be.an('object');
+                expect(res.Data).to.be.an('object', "Data does not exist");
+                expect(res.Data.InvoiceID).to.be.a('number', "InvoiceID is not a number or does not exist");
+                expect(res.Data.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
 
-            var i = response.Data.Invoice;
-            expect(i.OrderID).to.be.a('number', "OrderID is not a number");
-            expect(i.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
-            expect(i.Finished).to.equal(false, "Order should not be finished");
-            expect(i.Sold).to.equal(false, "Order should not be sold");
-            expect(i.Total).to.be.a('number', "Total is not a number or does not exist");
-            expect(i.Tax).to.be.a('number', "Tax is not a number or does not exist");
+                done();
+            }).catch(done);
+        });
 
-            expect(response.Data.Invoice).to.be.an('object');
+        it('should find an invoice with ID', function(done) {
+            expect(testInvoiceId).to.be.a('number');
 
-            var ds = i.Detail;
-            ds.forEach(function(d) {
-                expect(d.Typ).to.be.a('string', "Typ is not a string or does not exist");
-                expect(d.Qty).to.be.a('number', "Qty is not a number or does not exist");
-                expect(d.Pcs).to.be.a('number', "Pcs is not a number or does not exist");
-                expect(d.Amt).to.be.a('number', "Amt is not a number or does not exist");
-                expect(d.Dsc).to.be.a('string', "Dsc is not a string or does not exist");
-            });
+            fab.Invoice.FindById(testInvoiceId).then(function(res) {
+                expect(res.Code).to.equal(200);
+                expect(res.Status).to.equal("Success");
 
-            done();
-        }).catch(done);
-    });
+                expect(res.Data).to.be.an('object');
+                expect(res.Data.Invoice).to.be.an('object');
+
+                var i = res.Data.Invoice;
+                expect(i.OrderID).to.be.a('number', "OrderID is not a number");
+                expect(i.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
+                expect(i.Finished).to.equal(false, "Order should not be finished");
+                expect(i.Sold).to.equal(false, "Order should not be sold");
+                expect(i.Total).to.be.a('number', "Total is not a number or does not exist");
+                expect(i.Tax).to.be.a('number', "Tax is not a number or does not exist");
+
+                expect(res.Data.Invoice).to.be.an('object');
+
+                var ds = i.Detail;
+                ds.forEach(function(d) {
+                    expect(d.Typ).to.be.a('string', "Typ is not a string or does not exist");
+                    expect(d.Qty).to.be.a('number', "Qty is not a number or does not exist");
+                    expect(d.Pcs).to.be.a('number', "Pcs is not a number or does not exist");
+                    expect(d.Amt).to.be.a('number', "Amt is not a number or does not exist");
+                    expect(d.Dsc).to.be.a('string', "Dsc is not a string or does not exist");
+                });
+
+                done();
+            }).catch(done);
+        });
 });
