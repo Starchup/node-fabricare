@@ -1,6 +1,6 @@
 {
     "name": "node-fabricare",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "./fabricare",
     "description": "Fabricare POS Integrator for Node JS",
     "author": {
@@ -19,7 +19,8 @@
         "node": ">= 0.10"
     },
     "dependencies": {
-        "request-promise": "1.0.2"
+        "request": "2.75.0",
+        "request-promise": "4.1.1"
     },
     "devDependencies": {
         "mocha": "3.1.2",
