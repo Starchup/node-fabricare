@@ -90,7 +90,6 @@ var FABRICARE = function(config) {
 
         FindWithQuery: function(queryArguments) {
             return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments).catch(function(response) {
-                console.log(response);
                 if (response.statusCode === 404) return Promise.resolve({});
                 return Promise.reject();
             });
