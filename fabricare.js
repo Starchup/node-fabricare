@@ -3,7 +3,9 @@
  */
 var request = require('request-promise');
 
-var DEFAULT_HEADERS = { 'Content-type': 'application/json' };
+var DEFAULT_HEADERS = {
+    'Content-type': 'application/json'
+};
 
 /**
  * Constructor
@@ -36,8 +38,8 @@ var FABRICARE = function(config) {
 
             return request(options).then(function(res) {
                 var response = JSON.parse(res);
-                if (!response || !response.Data) return Promise.reject("No data");
-                if (!self.Util.hasValidCode(response)) return Promise.reject(response.message);
+                if (!response || !response.Data) return Promise.reject(new Error("No data"));
+                if (!self.Util.hasValidCode(response)) return Promise.reject(new Error(response.message));
                 return Promise.resolve(response);
             }).catch(function(err) {
                 delete err.response;
@@ -201,6 +203,44 @@ var FABRICARE = function(config) {
 
             return self.Request.CreateRequest('GET', 'invoices', invoiceId);
         }
+    };
+
+    self.Route = {
+        List: function() {
+            return self.Request.CreateRequest('GET', 'routes');
+        }
+    };
+
+    self.RouteCustomer = {
+        AllStops: function(routeId) {
+            self.Util.validateArgument(routeId, 'routeId');
+
+            return self.Request.CreateRequest('GET', 'routes', routeId, 'allstops');
+        },
+
+        ActiveStops: function(routeId) {
+            self.Util.validateArgument(routeId, 'routeId');
+
+            return self.Request.CreateRequest('GET', 'routes', routeId, 'activestops');
+        },
+
+        DeliveriesOnly: function(routeId) {
+            self.Util.validateArgument(routeId, 'routeId');
+
+            return self.Request.CreateRequest('GET', 'routes', routeId, 'deliveriesonly');
+        },
+
+        PickupsDeliveries: function(routeId) {
+            self.Util.validateArgument(routeId, 'routeId');
+
+            return self.Request.CreateRequest('GET', 'routes', routeId, 'pickupsdeliveries');
+        },
+    };
+
+    self.Stop = {
+        FindWithQuery: function(queryArguments) {
+            return self.Request.CreateRequest('GET', 'stops', null, null, null, queryArguments);
+        },
     };
 
     self.Util = {
