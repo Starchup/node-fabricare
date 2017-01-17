@@ -223,88 +223,88 @@ describe('Order Methods', function() {
         }).catch(done);
     });
 
-        it('should mark an order as sold', function(done) {
-            expect(testOrderId).to.be.a('number');
+    it('should mark an order as sold', function(done) {
+        expect(testOrderId).to.be.a('number');
 
-            fab.Order.Sold(testOrderId).then(function(res) {
-                expect(res.Code).to.equal(200);
-                expect(res.Status).to.equal("Success");
+        fab.Order.Sold(testOrderId).then(function(res) {
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-                expect(res.Data).to.be.an('object');
-                expect(res.Data.OrderID).to.be.a('number');
-                expect(res.Data.OrderID).to.equal(testOrderId);
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.OrderID).to.be.a('number');
+            expect(res.Data.OrderID).to.equal(testOrderId);
 
-                done();
-            }).catch(done);
-        });
-
-        it('should get the order status', function(done) {
-            expect(testOrderId).to.be.a('number');
-
-            fab.Order.Status(testOrderId).then(function(res) {
-                expect(res.Code).to.equal(200);
-                expect(res.Status).to.equal("Success");
-
-                expect(res.Data).to.be.an('object');
-
-                var d = res.Data;
-                expect(d.OrderID).to.equal(testOrderId, "OrderID does not match");
-                expect(d.Finished).to.equal(false, "Order should not be finished");
-                expect(d.Sold).to.equal(false, "Order should not be sold");
-
-                done();
-            }).catch(done);
-        });
+            done();
+        }).catch(done);
     });
 
-    describe('Invoice Methods', function() {
-        var testInvoiceId = 0001;
+    it('should get the order status', function(done) {
+        expect(testOrderId).to.be.a('number');
 
-        it('should find that the invoice exists with ID', function(done) {
-            expect(testInvoiceId).to.be.a('number');
+        fab.Order.Status(testOrderId).then(function(res) {
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-            fab.Invoice.Exists(testInvoiceId).then(function(res) {
-                expect(res.Code).to.equal(200);
-                expect(res.Status).to.equal("Success");
+            expect(res.Data).to.be.an('object');
 
-                expect(res.Data).to.be.an('object', "Data does not exist");
-                expect(res.Data.InvoiceID).to.be.a('number', "InvoiceID is not a number or does not exist");
-                expect(res.Data.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
+            var d = res.Data;
+            expect(d.OrderID).to.equal(testOrderId, "OrderID does not match");
+            expect(d.Finished).to.equal(false, "Order should not be finished");
+            expect(d.Sold).to.equal(false, "Order should not be sold");
 
-                done();
-            }).catch(done);
-        });
+            done();
+        }).catch(done);
+    });
+});
 
-        it('should find an invoice with ID', function(done) {
-            expect(testInvoiceId).to.be.a('number');
+describe('Invoice Methods', function() {
+    var testInvoiceId = 0001;
 
-            fab.Invoice.FindById(testInvoiceId).then(function(res) {
-                expect(res.Code).to.equal(200);
-                expect(res.Status).to.equal("Success");
+    it('should find that the invoice exists with ID', function(done) {
+        expect(testInvoiceId).to.be.a('number');
 
-                expect(res.Data).to.be.an('object');
-                expect(res.Data.Invoice).to.be.an('object');
+        fab.Invoice.Exists(testInvoiceId).then(function(res) {
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
 
-                var i = res.Data.Invoice;
-                expect(i.OrderID).to.be.a('number', "OrderID is not a number");
-                expect(i.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
-                expect(i.Finished).to.equal(false, "Order should not be finished");
-                expect(i.Sold).to.equal(false, "Order should not be sold");
-                expect(i.Total).to.be.a('number', "Total is not a number or does not exist");
-                expect(i.Tax).to.be.a('number', "Tax is not a number or does not exist");
+            expect(res.Data).to.be.an('object', "Data does not exist");
+            expect(res.Data.InvoiceID).to.be.a('number', "InvoiceID is not a number or does not exist");
+            expect(res.Data.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
 
-                expect(res.Data.Invoice).to.be.an('object');
+            done();
+        }).catch(done);
+    });
 
-                var ds = i.Detail;
-                ds.forEach(function(d) {
-                    expect(d.Typ).to.be.a('string', "Typ is not a string or does not exist");
-                    expect(d.Qty).to.be.a('number', "Qty is not a number or does not exist");
-                    expect(d.Pcs).to.be.a('number', "Pcs is not a number or does not exist");
-                    expect(d.Amt).to.be.a('number', "Amt is not a number or does not exist");
-                    expect(d.Dsc).to.be.a('string', "Dsc is not a string or does not exist");
-                });
+    it('should find an invoice with ID', function(done) {
+        expect(testInvoiceId).to.be.a('number');
 
-                done();
-            }).catch(done);
-        });
+        fab.Invoice.FindById(testInvoiceId).then(function(res) {
+            expect(res.Code).to.equal(200);
+            expect(res.Status).to.equal("Success");
+
+            expect(res.Data).to.be.an('object');
+            expect(res.Data.Invoice).to.be.an('object');
+
+            var i = res.Data.Invoice;
+            expect(i.OrderID).to.be.a('number', "OrderID is not a number");
+            expect(i.InvoiceID).to.equal(testInvoiceId, "InvoiceID does not match");
+            expect(i.Finished).to.equal(false, "Order should not be finished");
+            expect(i.Sold).to.equal(false, "Order should not be sold");
+            expect(i.Total).to.be.a('number', "Total is not a number or does not exist");
+            expect(i.Tax).to.be.a('number', "Tax is not a number or does not exist");
+
+            expect(res.Data.Invoice).to.be.an('object');
+
+            var ds = i.Detail;
+            ds.forEach(function(d) {
+                expect(d.Typ).to.be.a('string', "Typ is not a string or does not exist");
+                expect(d.Qty).to.be.a('number', "Qty is not a number or does not exist");
+                expect(d.Pcs).to.be.a('number', "Pcs is not a number or does not exist");
+                expect(d.Amt).to.be.a('number', "Amt is not a number or does not exist");
+                expect(d.Dsc).to.be.a('string', "Dsc is not a string or does not exist");
+            });
+
+            done();
+        }).catch(done);
+    });
 });
