@@ -86,6 +86,12 @@ var FABRICARE = function(config) {
             self.Util.validateArgument(customer, 'customer');
 
             return self.Request.CreateRequest('POST', 'customers', customerId, null, customer);
+        },
+
+        CreditsBalance: function(customerId) {
+            self.Util.validateArgument(customerId, 'customerId');
+
+            return self.Request.CreateRequest('GET', 'customers', customerId, 'creditsbalance');
         }
     };
 
