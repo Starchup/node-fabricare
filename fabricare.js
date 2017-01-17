@@ -99,7 +99,7 @@ var FABRICARE = function(config) {
         FindById: function(orderId) {
             self.Util.validateArgument(orderId, 'orderId');
 
-            return self.Request.CreateRequest('GET', 'orders', orderId);
+            return self.Request.CreateRequest('GET', 'orders', orderId, 'verbose');
         },
 
         Create: function(order) {
@@ -143,7 +143,7 @@ var FABRICARE = function(config) {
         FindById: function(invoiceId) {
             self.Util.validateArgument(invoiceId, 'invoiceId');
 
-            return self.Request.CreateRequest('GET', 'invoices', invoiceId);
+            return self.Request.CreateRequest('GET', 'invoices', invoiceId, 'verbose');
         }
     };
 
