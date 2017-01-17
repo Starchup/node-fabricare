@@ -49,28 +49,6 @@ var FABRICARE = function(config) {
     };
 
     self.Customer = {
-        //Customer attributes
-        /**
-         * externalId
-         * firstName
-         * lastName
-         * street
-         * unit
-         * city
-         * state
-         * zip
-         * email
-         * homePhone
-         * cellPhone
-         * workPhone
-         * package
-         * starch
-         * comment
-         * invReminder
-         * notes
-         * taxExempt
-         **/
-
         Exists: function(customerId) {
             self.Util.validateArgument(customerId, 'customerId');
 
@@ -112,17 +90,6 @@ var FABRICARE = function(config) {
     };
 
     self.Order = {
-        //Order attributes
-        /**
-         * externalId
-         * customerId
-         * Ordered
-         * Promised
-         * InvNote1
-         * InvNote2
-         * InvMemo
-         **/
-
         Exists: function(orderId) {
             self.Util.validateArgument(orderId, 'orderId');
 
@@ -167,31 +134,6 @@ var FABRICARE = function(config) {
     };
 
     self.Invoice = {
-        //Invoice attributes
-        /**
-         * orderId
-         * customerId
-         * dept
-         * rack
-         * invoiced
-         * promised
-         * finished
-         * paid
-         * delivered
-         * srvFees
-         * coupons
-         * discounts
-         * savings
-         * tax
-         * total
-         * paidAmt
-         * detail
-         * - typ
-         * - qty
-         * - dsc
-         * - amt
-         **/
-
         Exists: function(invoiceId) {
             self.Util.validateArgument(invoiceId, 'invoiceId');
 
