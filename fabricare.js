@@ -112,6 +112,7 @@ var FABRICARE = function(config) {
             self.Util.validateArgument(order, 'order');
             self.Util.validateArgument(order.customerId, 'order.customerId');
             self.Util.validateArgument(order.ordered, 'order.ordered');
+            self.Util.validateArgument(order.promised, 'order.promised');
 
             order.ordered = order.ordered.toISOString();
             order.promised = order.promised.toISOString();
