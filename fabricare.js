@@ -42,6 +42,11 @@ var FABRICARE = function(config) {
                 if (!self.Util.hasValidCode(response)) return Promise.reject(new Error(response.message));
                 return Promise.resolve(response);
             }).catch(function(err) {
+                if (err.statusCode && err.statusCode === 404) {
+                    if (err.message && err.message.match(/No [a-zA-Z ]+ Found/i)) {
+                        return Promise.resolve([]);
+                    }
+                }
                 delete err.response;
                 return Promise.reject(err);
             });
