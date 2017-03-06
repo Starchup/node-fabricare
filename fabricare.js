@@ -189,6 +189,10 @@ var FABRICARE = function(config) {
 
             return self.Request.CreateRequest('GET', 'routes', routeId, 'pickupsdeliveries');
         },
+
+        ActiveStopsInventory: function(routeId) {
+            return self.Request.CreateRequest('GET', 'routes', routeId, 'activestopinventory');
+        }
     };
 
     self.Stop = {
