@@ -37,6 +37,7 @@ var FABRICARE = function(config) {
             };
 
             return request(options).then(function(res) {
+                res = res.replace(/\\'/g, "'");
                 var response = JSON.parse(res);
                 if (!response || !response.Data) return Promise.reject(new Error("No data"));
                 if (!self.Util.hasValidCode(response)) return Promise.reject(new Error(response.message));
