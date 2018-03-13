@@ -36,7 +36,8 @@ var FABRICARE = function (config)
                 {
                     'username': self.CONFIG.User,
                     'password': self.CONFIG.Password
-                }
+                },
+                timeout: 120 // 2 minutes
             };
 
             return request(options).then(function (res)
