@@ -35,7 +35,7 @@
     "scripts":
     {
         "pretest": "jshint .",
-        "test": "mocha"
+        "test": "mocha --timeout 10000"
     },
     "readmeFilename": "README.md",
     "bugs":

@@ -10,12 +10,14 @@ var DEFAULT_HEADERS = {
 /**
  * Constructor
  */
-var FABRICARE = function(config) {
+var FABRICARE = function (config)
+{
     var self = this;
 
     self.Request = {
 
-        CreateRequest: function(httpMethod, resource, identifier, method, body, query) {
+        CreateRequest: function (httpMethod, resource, identifier, method, body, query)
+        {
             self.Util.validateArgument(resource, 'resource');
             self.Util.validateArgument(httpMethod, 'httpMethod');
 
@@ -30,21 +32,26 @@ var FABRICARE = function(config) {
                 uri: url,
                 method: httpMethod,
                 body: JSON.stringify(body),
-                auth: {
+                auth:
+                {
                     'username': self.CONFIG.User,
                     'password': self.CONFIG.Password
                 }
             };
 
-            return request(options).then(function(res) {
+            return request(options).then(function (res)
+            {
                 res = res.replace(/\\'/g, "'");
                 var response = JSON.parse(res);
                 if (!response || !response.Data) return Promise.reject(new Error("No data"));
                 if (!self.Util.hasValidCode(response)) return Promise.reject(new Error(response.message));
                 return Promise.resolve(response);
-            }).catch(function(err) {
-                if (err.statusCode && err.statusCode === 404) {
-                    if (err.message && err.message.match(/No [a-zA-Z ]+ Found/i)) {
+            }).catch(function (err)
+            {
+                if (err.statusCode && err.statusCode === 404)
+                {
+                    if (err.message && err.message.match(/No [a-zA-Z ]+ Found/i))
+                    {
                         return Promise.resolve([]);
                     }
                 }
@@ -55,30 +62,35 @@ var FABRICARE = function(config) {
     };
 
     self.Customer = {
-        Exists: function(customerId) {
+        Exists: function (customerId)
+        {
             self.Util.validateArgument(customerId, 'customerId');
 
             return self.Request.CreateRequest('GET', 'customers', customerId, 'exists');
         },
 
-        FindById: function(customerId) {
+        FindById: function (customerId)
+        {
             self.Util.validateArgument(customerId, 'customerId');
 
             return self.Request.CreateRequest('GET', 'customers', customerId);
         },
 
-        FindByIdInvoices: function(customerId, status) {
+        FindByIdInvoices: function (customerId, status)
+        {
             self.Util.validateArgument(customerId, 'customerId', customerId);
             self.Util.validateArgument(status, 'status', status);
 
             return self.Request.CreateRequest('GET', 'customers', customerId, status);
         },
 
-        FindWithQuery: function(queryArguments) {
+        FindWithQuery: function (queryArguments)
+        {
             return self.Request.CreateRequest('GET', 'customers', null, null, null, queryArguments);
         },
 
-        Create: function(customer) {
+        Create: function (customer)
+        {
             self.Util.validateArgument(customer, 'customer');
             self.Util.validateArgument(customer.email, 'customer.email');
             self.Util.validateArgument(customer.firstName, 'customer.firstName');
@@ -87,14 +99,16 @@ var FABRICARE = function(config) {
             return self.Request.CreateRequest('POST', 'customers', null, null, customer);
         },
 
-        Update: function(customerId, customer) {
+        Update: function (customerId, customer)
+        {
             self.Util.validateArgument(customerId, 'customerId');
             self.Util.validateArgument(customer, 'customer');
 
             return self.Request.CreateRequest('POST', 'customers', customerId, null, customer);
         },
 
-        CreditsBalance: function(customerId) {
+        CreditsBalance: function (customerId)
+        {
             self.Util.validateArgument(customerId, 'customerId');
 
             return self.Request.CreateRequest('GET', 'customers', customerId, 'creditsbalance');
@@ -102,19 +116,22 @@ var FABRICARE = function(config) {
     };
 
     self.Order = {
-        Exists: function(orderId) {
+        Exists: function (orderId)
+        {
             self.Util.validateArgument(orderId, 'orderId');
 
             return self.Request.CreateRequest('GET', 'orders', orderId, 'exists');
         },
 
-        FindById: function(orderId) {
+        FindById: function (orderId)
+        {
             self.Util.validateArgument(orderId, 'orderId');
 
             return self.Request.CreateRequest('GET', 'orders', orderId, 'verbose');
         },
 
-        Create: function(order) {
+        Create: function (order)
+        {
             self.Util.validateArgument(order, 'order');
             self.Util.validateArgument(order.customerId, 'order.customerId');
             self.Util.validateArgument(order.ordered, 'order.ordered');
@@ -126,20 +143,23 @@ var FABRICARE = function(config) {
             return self.Request.CreateRequest('POST', 'orders', null, null, order);
         },
 
-        Update: function(orderId, order) {
+        Update: function (orderId, order)
+        {
             self.Util.validateArgument(orderId, 'orderId');
             self.Util.validateArgument(order, 'order');
 
             return self.Request.CreateRequest('POST', 'orders', orderId, null, order);
         },
 
-        Sold: function(orderId) {
+        Sold: function (orderId)
+        {
             self.Util.validateArgument(orderId, 'orderId');
 
             return self.Request.CreateRequest('PATCH', 'orders', orderId);
         },
 
-        Status: function(orderId) {
+        Status: function (orderId)
+        {
             self.Util.validateArgument(orderId, 'orderId');
 
             return self.Request.CreateRequest('GET', 'orders', orderId, 'status');
@@ -147,13 +167,15 @@ var FABRICARE = function(config) {
     };
 
     self.Invoice = {
-        Exists: function(invoiceId) {
+        Exists: function (invoiceId)
+        {
             self.Util.validateArgument(invoiceId, 'invoiceId');
 
             return self.Request.CreateRequest('GET', 'invoices', invoiceId, 'exists');
         },
 
-        FindById: function(invoiceId) {
+        FindById: function (invoiceId)
+        {
             self.Util.validateArgument(invoiceId, 'invoiceId');
 
             return self.Request.CreateRequest('GET', 'invoices', invoiceId, 'verbose');
@@ -161,76 +183,91 @@ var FABRICARE = function(config) {
     };
 
     self.Route = {
-        List: function() {
+        List: function ()
+        {
             return self.Request.CreateRequest('GET', 'routes');
         }
     };
 
     self.RouteCustomer = {
-        AllStops: function(routeId) {
+        AllStops: function (routeId)
+        {
             self.Util.validateArgument(routeId, 'routeId');
 
             return self.Request.CreateRequest('GET', 'routes', routeId, 'allstops');
         },
 
-        ActiveStops: function(routeId) {
+        ActiveStops: function (routeId)
+        {
             self.Util.validateArgument(routeId, 'routeId');
 
             return self.Request.CreateRequest('GET', 'routes', routeId, 'activestops');
         },
 
-        DeliveriesOnly: function(routeId) {
+        DeliveriesOnly: function (routeId)
+        {
             self.Util.validateArgument(routeId, 'routeId');
 
             return self.Request.CreateRequest('GET', 'routes', routeId, 'deliveriesonly');
         },
 
-        PickupsDeliveries: function(routeId) {
+        PickupsDeliveries: function (routeId)
+        {
             self.Util.validateArgument(routeId, 'routeId');
 
             return self.Request.CreateRequest('GET', 'routes', routeId, 'pickupsdeliveries');
         },
 
-        ActiveStopsInventory: function(routeId) {
+        ActiveStopsInventory: function (routeId)
+        {
             return self.Request.CreateRequest('GET', 'routes', routeId, 'activestopinventory');
         }
     };
 
     self.Stop = {
-        FindWithQuery: function(queryArguments) {
+        FindWithQuery: function (queryArguments)
+        {
             return self.Request.CreateRequest('GET', 'stops', null, null, null, queryArguments);
         },
     };
 
     self.Util = {
-        hasValidCode: function(res) {
+        hasValidCode: function (res)
+        {
             if (res.statusCode && res.statusCode === 200) return true;
             if (res.Code && res.Code === 200) return true;
             return false;
         },
 
-        validateArgument: function(arg, name) {
-            if (arg === null || arg === undefined) {
+        validateArgument: function (arg, name)
+        {
+            if (arg === null || arg === undefined)
+            {
                 throw new Error("Required argument missing: " + name);
             }
         },
 
-        getBaseUrl: function() {
+        getBaseUrl: function ()
+        {
             return "https://" + self.CONFIG.IP + ":" + self.CONFIG.Port + "/" + self.CONFIG.Prefix;
         },
 
-        isObject: function(prop) {
+        isObject: function (prop)
+        {
             return Object.prototype.toString.call(prop) === '[object Object]';
         },
 
-        buildUrl: function(resource, id, method, query) {
+        buildUrl: function (resource, id, method, query)
+        {
             var url = this.getBaseUrl() + "/" + resource;
 
             if (id) url = url + "/" + id;
             if (method) url = url + "/" + method;
-            if (query && this.isObject(query) && Object.keys(query).length > 0) {
+            if (query && this.isObject(query) && Object.keys(query).length > 0)
+            {
 
-                var queryArray = Object.keys(query).map(function(key, index) {
+                var queryArray = Object.keys(query).map(function (key, index)
+                {
                     return key + "=" + query[key];
                 });
                 url = url + "?" + queryArray.join(",");
