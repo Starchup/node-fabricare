@@ -236,7 +236,9 @@ var FABRICARE = function (config)
         hasValidCode: function (res)
         {
             if (res.statusCode && res.statusCode === 200) return true;
+            if (res.statusCode && res.statusCode === 201) return true;
             if (res.Code && res.Code === 200) return true;
+            if (res.Code && res.Code === 201) return true;
             return false;
         },
 
