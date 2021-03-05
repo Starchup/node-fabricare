@@ -1,12 +1,3 @@
-// var fab = new require('./fabricare')(
-// {
-//     User: "user",
-//     Password: "password",
-//     Prefix: "prefix",
-//     Port: "0000",
-//     IP: "127.0.0.1"
-// });
-
 var config = {
     "name": "fabricare",
     "account": "ChampsCleaners",
